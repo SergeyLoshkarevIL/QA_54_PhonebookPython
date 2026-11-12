@@ -13,25 +13,16 @@ class LoginPage(BasePage):
     SIGN_OUT_BUTTON = (By.XPATH,"//*[text()='Sign Out']")
 
     def open_login_page(self):
-        #self.driver.find_element(*self.LOGIN_LINK).click()
         self.click(self.LOGIN_LINK)
 
     def fill_email_field(self,email):
-        #self.driver.find_element(*self.EMAIL_INPUT).clear()
-        #self.driver.find_element(*self.EMAIL_INPUT).send_keys(email)
         self.fill(self.EMAIL_INPUT, email)
 
     def fill_password_field(self,password):
-        #self.driver.find_element(*self.PASSWORD_INPUT).clear()
-        #self.driver.find_element(*self.PASSWORD_INPUT).send_keys(password)
         self.fill(self.PASSWORD_INPUT, password)
 
     def click_on_login_button(self):
-        #self.driver.find_element(*self.BUTTON_LOGIN).click()
-        self.click(self.LOGIN_LINK)
-
-    #def is_sign_out_displayed(self):
-       #return self.driver.find_element(*self.SIGN_OUT_BUTTON).is_displayed()
+        self.click(self.BUTTON_LOGIN)
 
     def is_sign_out_displayed(self):
         try:
