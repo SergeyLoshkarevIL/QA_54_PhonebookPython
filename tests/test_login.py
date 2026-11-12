@@ -1,4 +1,5 @@
 from pages.login_page import LoginPage
+from pages.base_page import BasePage
 
 VALID_EMAIL = "manuel@gmail.com"
 VALID_PASSWORD = "Manuel12345$"
