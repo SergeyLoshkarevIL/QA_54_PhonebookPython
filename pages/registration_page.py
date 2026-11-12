@@ -28,19 +28,16 @@ class RegistrationPage:
     def click_on_registration_button(self):
         self.driver.find_element(*self.BUTTON_REGISTRATION).click()
 
-    #def is_sign_out_displayed(self):
-       #return self.driver.find_element(*self.SIGN_OUT_BUTTON).is_displayed()
-
     def is_sign_out_displayed(self):
         try:
-            WebDriverWait(self.driver, timeout=10).until(
+            WebDriverWait(self.driver, timeout=5).until(
                 expected_conditions.visibility_of_element_located(self.SIGN_OUT_BUTTON))
             return True
         except TimeoutException:
             return False
 
     def get_alert_text(self):
-        alert = WebDriverWait(self.driver,timeout=10).until(
+        alert = WebDriverWait(self.driver,timeout=5).until(
             expected_conditions.alert_is_present()
         )
         return alert.text
