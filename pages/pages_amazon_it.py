@@ -19,11 +19,14 @@ class AmazonIt:
         self.driver.find_element(By.ID,"ap_password").send_keys(password)
         self.driver.find_element(By.ID,"signInSubmit").click()
 
+    def get_login(self):
+        element = WebDriverWait(self.driver, 10).until(
+            expected_conditions.visibility_of_element_located((By.ID, "nav-link-accountList-nav-line-1"))
+        )
+        return element.text
+
     def is_logged_in(self, first_name):
         try:
-            element = WebDriverWait(self.driver, 10).until(
-                expected_conditions.visibility_of_element_located((By.ID, "nav-link-accountList-nav-line-1")))
-
-            return element.text.find(first_name) != -1
+            return first_name in self.get_login()
         except TimeoutException:
             return False

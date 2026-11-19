@@ -34,7 +34,7 @@ class ContactPage(BasePage):
     def fill_description(self,description):
         self.fill(self.DESCRIPTION_INPUT, description)
 
-    def fill_contact(self,contact):
+    def fill_contact_form(self,contact):
         self.fill_name(contact.name)
         self.fill_last_name(contact.last_name)
         self.fill_phone(contact.phone)
@@ -43,7 +43,7 @@ class ContactPage(BasePage):
         self.fill_description(contact.description)
 
     def submit_contact(self):
-        self.driver.find_element(*self.SAVE_BUTTON).click()
+        self.click(self.SAVE_BUTTON)
 
     def contact_card_visible(self, phone):
         locator = (By.XPATH, f"//h3[contains(text(),'{phone}')]")
@@ -53,3 +53,8 @@ class ContactPage(BasePage):
 
     def open_contact_details_card(self, phone):
         card = self.driver.find_element(By.XPATH, f"//h3[contains(text(),'{phone}')]/..").click()
+
+    def create_contact_steps(self, contact):
+        self.open_contact_form()
+        self.fill_contact_form(contact)
+        self.submit_contact()
