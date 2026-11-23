@@ -1,17 +1,21 @@
+import logging
 from faker import Faker
 from models.contact import Contact
 from pages.add_contact_page import ContactPage
 from pages.contacts_page import ContactsPage
 
 fake = Faker()
+logger = logging.getLogger(__name__)
+
+
 def create_contact():
     return Contact(
-        name =fake.first_name(),
+        name=fake.first_name(),
         last_name=fake.last_name(),
         phone=fake.numerify("05########"),
-        email =fake.email(),
-        address = fake.street_address(),
-        description= fake.sentence(nb_words=2)
+        email=fake.email(),
+        address=fake.street_address(),
+        description=fake.sentence(nb_words=2)
     )
 
 
@@ -28,7 +32,7 @@ def test_edit_contact_name_field(authenticated):
     contacts_page.set_edit_mode(contacts_page.EDIT_NAME_INPUT, new_name)
     contacts_page.submit_edit()
 
-    assert contacts_page.contact_name_for_phone(contact) == new_name
+    assert contacts_page.contact_name_for_phone(contact.phone) == new_name
 
 
 def test_edit_contact_last_name_field(authenticated):
@@ -44,7 +48,7 @@ def test_edit_contact_last_name_field(authenticated):
     contacts_page.set_edit_mode(contacts_page.EDIT_LAST_NAME_INPUT, new_last_name)
     contacts_page.submit_edit()
 
-    assert contacts_page.contact_last_name(new_last_name) == new_last_name
+    assert contacts_page.contact_last_name() == new_last_name
 
 
 def test_edit_contact_phone_field(authenticated):
@@ -53,7 +57,10 @@ def test_edit_contact_phone_field(authenticated):
 
     contact = create_contact()
     contact_page.create_contact_steps(contact)
-    new_phone = fake.numerify(text = "05########")
+    new_phone = fake.numerify(text="05########")
+
+    logger.debug(f"Old phone number: {contact.phone}")
+    logger.debug(f"New phone number: {new_phone}")
 
     contacts_page.open_contact_details_card(contact.phone)
     contacts_page.open_edit_mode()
@@ -61,6 +68,7 @@ def test_edit_contact_phone_field(authenticated):
     contacts_page.submit_edit()
 
     assert contacts_page.contact_cards_visible(new_phone)
+
 
 def test_edit_contact_email_field(authenticated):
     contact_page = ContactPage(authenticated)

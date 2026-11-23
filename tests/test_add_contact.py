@@ -37,8 +37,9 @@ def test_add_contact_success_all_req_fields(authenticated):
         description= ""
         )
 
-    contact_page.open_contact_form()
-    contact_page.fill_contact_form(contact)
-    contact_page.submit_contact()
+    # contact_page.open_contact_form()
+    # contact_page.fill_contact_form(contact)
+    # contact_page.submit_contact()
+    contact_page.create_contact_steps(contact)
 
     assert contact_page.contact_card_visible(contact.phone)

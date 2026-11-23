@@ -1,11 +1,15 @@
 import time
+
+import logging
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
 
+logger = logging.getLogger(__name__)
+
 class ContactsPage(BasePage):
-    CONTACTS_LINK = (By.CSS_SELECTOR, "a[href='/contacts/']")
+    CONTACTS_LINK = (By.CSS_SELECTOR, "a[href='/contacts']")
     CONTACTS_CARDS = (By.CLASS_NAME, "contact-item_card__2SOIM")
     BUTTON_EDIT = (By.XPATH, "//button[text()='Edit']")
     EDIT_NAME_INPUT = (By.CSS_SELECTOR, "input[placeholder='Name']")
@@ -16,7 +20,7 @@ class ContactsPage(BasePage):
     EDIT_DESCRIPTION_INPUT = (By.CSS_SELECTOR, "input[placeholder='desc']")
     EDIT_SAVE_BUTTON = (By.XPATH, "//button[text()='Save']")
     DETAILS_CARD = (By.CLASS_NAME, 'contact-item-detailed_card__50dTS')
-    BUTTON_REMOVE = (By.XPATH, "//button[text().='Remove']")
+    BUTTON_REMOVE = (By.XPATH, "//button[text()='Remove']")
 
     def open_contacts_list(self):
         self.click(self.CONTACTS_LINK)
@@ -34,8 +38,8 @@ class ContactsPage(BasePage):
         element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(locator))
         return element.is_displayed()
 
-    def open_contact_details_card(self):
-       self.click(self.CONTACTS_CARDS)
+    def open_contact_details_card(self, phone):
+        self.click(self.get_card_locator(phone))
 
     @staticmethod
     def get_card_locator(phone):
@@ -64,6 +68,7 @@ class ContactsPage(BasePage):
         return card.text.split()[3]
 
     def remove_current_contact(self):
+        logger.info(f"Removing current contact")
         self.click(self.BUTTON_REMOVE)
         time.sleep(1)
 
@@ -75,4 +80,5 @@ class ContactsPage(BasePage):
     def remove_all_contacts(self):
         while self.get_contact_cards_number() > 0:
             self.open_first_contact()
+            self.remove_current_contact()
 

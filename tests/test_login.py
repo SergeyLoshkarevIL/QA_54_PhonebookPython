@@ -1,9 +1,9 @@
 from pages.login_page import LoginPage
 
-#VALID_EMAIL = "manuel@gmail.com"
-#VALID_PASSWORD = "Manuel12345$"
-VALID_EMAIL = "test1337@gmail.com"
-VALID_PASSWORD = "1234qwer1"
+VALID_EMAIL = "manuel@gmail.com"
+VALID_PASSWORD = "Manuel12345$"
+#VALID_EMAIL = "test1337@gmail.com"
+#VALID_PASSWORD = "1234qwer1"
 INVALID_EMAIL = "manuelgmail.com"
 INVALID_PASSWORD = "Manuel12345"
 

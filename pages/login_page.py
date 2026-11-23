@@ -3,6 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from pages.base_page import BasePage
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class LoginPage(BasePage):
@@ -13,6 +16,7 @@ class LoginPage(BasePage):
     SIGN_OUT_BUTTON = (By.XPATH,"//*[text()='Sign Out']")
 
     def open_login_page(self):
+        logger.info("Opening Login form")
         self.click(self.LOGIN_LINK)
 
     def fill_email_field(self,email):
